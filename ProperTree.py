@@ -78,6 +78,11 @@ class ProperTree:
         # Create new queues for multiprocessing
         self.queue = multiprocessing.Queue()
         self.tex_queue = multiprocessing.Queue()
+        # Support for HiDPI
+        if sys.platform.startswith("win"):
+            ctypes.windll.shcore.SetProcessDpiAwareness(1)
+            ScaleFactor = ctypes.windll.shcore.GetScaleFactorForDevice(0)
+            self.tk.call('tk', 'scaling', ScaleFactor / 75)
         # Create the new tk object
         self.tk = tk.Tk()
         self.tk.withdraw() # Try to remove before it's drawn
