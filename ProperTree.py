@@ -19,6 +19,7 @@ try:
     unicode
 except NameError:  # Python 3
     unicode = str
+import ctypes
 # Add this script's dir to the local PATH var - may improve import consistency
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from Scripts import plist, plistwindow, downloader
@@ -78,13 +79,13 @@ class ProperTree:
         # Create new queues for multiprocessing
         self.queue = multiprocessing.Queue()
         self.tex_queue = multiprocessing.Queue()
-        # Support for HiDPI
+        # Create the new tk object
+        self.tk = tk.Tk()
+        # Support for HiDPI(Yihang Xiao)
         if sys.platform.startswith("win"):
             ctypes.windll.shcore.SetProcessDpiAwareness(1)
             ScaleFactor = ctypes.windll.shcore.GetScaleFactorForDevice(0)
             self.tk.call('tk', 'scaling', ScaleFactor / 75)
-        # Create the new tk object
-        self.tk = tk.Tk()
         self.tk.withdraw() # Try to remove before it's drawn
         self.tk.title("Convert Values")
         self.tk.minsize(width=640,height=130)
