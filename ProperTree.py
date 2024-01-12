@@ -86,7 +86,6 @@ class ProperTree:
             ctypes.windll.shcore.SetProcessDpiAwareness(1)
             ScaleFactor = ctypes.windll.shcore.GetScaleFactorForDevice(0)
             self.tk.call('tk', 'scaling', ScaleFactor / 75)
-        self.tk.iconbitmap('logo.ico')
         self.tk.withdraw() # Try to remove before it's drawn
         self.tk.title("Convert Values")
         self.tk.minsize(width=640,height=130)
@@ -617,7 +616,7 @@ class ProperTree:
         if os.name=="nt":
             # If OS Version is 10
             windows_version = sys.getwindowsversion()
-            if (windows_version.major > 10 and windows_version.manor > 17134)
+            if (windows_version.major > 10 and windows_version.manor > 17134):
             # Get the registry entry to tell us if we're in dark/light mode
                 p = subprocess.Popen(["reg","query","HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize","/v","AppsUseLightTheme"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 c = p.communicate()
