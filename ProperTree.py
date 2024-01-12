@@ -615,12 +615,16 @@ class ProperTree:
 
     def get_dark(self):
         if os.name=="nt":
+            # If OS Version is 10
+            windows_version = sys.getwindowsversion()
+            if (windows_version.major > 10 and windows_version.manor > 17134)
             # Get the registry entry to tell us if we're in dark/light mode
-            p = subprocess.Popen(["reg","query","HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize","/v","AppsUseLightTheme"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            c = p.communicate()
-            return c[0].decode("utf-8", "ignore").strip().lower().split(" ")[-1] in ("","0x0")
+                p = subprocess.Popen(["reg","query","HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize","/v","AppsUseLightTheme"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                c = p.communicate()
+                return c[0].decode("utf-8", "ignore").strip().lower().split(" ")[-1] in ("","0x0")
+            return False
         elif str(sys.platform) != "darwin":
-            return True # Default to dark mode on Linux platforms
+            return False # Default to light mode on Linux platforms
         # Get the macOS version - and see if dark mode is a thing
         p = subprocess.Popen(["sw_vers","-productVersion"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         c = p.communicate()
@@ -667,7 +671,7 @@ class ProperTree:
         self.is_checking_for_updates = True # Lock out other update checks
         self.update_button.configure(
             state="disabled",
-            text="Checking... ({})".format(self.version.get("version","?.?.?"))
+            text="Checking... (v{})".format(self.version.get("version","?.?.?"))
         )
         # We'll leverage multiprocessing to avoid UI locks if the update checks take too long
         p = multiprocessing.Process(target=_check_for_update,args=(self.queue,self.version_url,user_initiated))
@@ -678,7 +682,7 @@ class ProperTree:
     def reset_update_button(self):
         self.update_button.configure(
             state="normal",
-            text="Check Now ({})".format(self.version.get("version","?.?.?"))
+            text="Check Now (v{})".format(self.version.get("version","?.?.?"))
         )
 
     def check_update_process(self, p):
@@ -723,7 +727,7 @@ class ProperTree:
             # We got an update we're not ignoring - let's prompt
             self.tk.bell()
             result = mb.askyesno(
-                title="New ProperTree Version Available",
+                title="New Version!",
                 message="Version {} is available (currently on {}).\n\nWhat's new in {}:\n{}\n\nVisit ProperTree's github repo now?".format(
                     check_version,
                     our_version,
@@ -737,8 +741,8 @@ class ProperTree:
         elif user_initiated:
             # No new updates - but we need to tell the user
             mb.showinfo(
-                title="No Updates Available",
-                message="You are currently running the latest version of ProperTree ({}).".format(our_version)
+                title="You are up to date",
+                message="You are currently running the latest version of ProperTree (v{}).".format(our_version)
             )
         
         else:
