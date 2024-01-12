@@ -86,6 +86,7 @@ class ProperTree:
             ctypes.windll.shcore.SetProcessDpiAwareness(1)
             ScaleFactor = ctypes.windll.shcore.GetScaleFactorForDevice(0)
             self.tk.call('tk', 'scaling', ScaleFactor / 75)
+        self.tk.iconbitmap('logo.ico')
         self.tk.withdraw() # Try to remove before it's drawn
         self.tk.title("Convert Values")
         self.tk.minsize(width=640,height=130)
