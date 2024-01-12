@@ -1,4 +1,4 @@
 {
-    "version": "0.2.6",
-    "changes": "- Add OC 0.9.6 hashes."
+    "version": "0.2.7",
+    "changes": "- Add support for HiDPI."
 }
