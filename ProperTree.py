@@ -88,7 +88,7 @@ class ProperTree:
             self.tk.call('tk', 'scaling', ScaleFactor / 75)
         self.tk.withdraw() # Try to remove before it's drawn
         self.tk.title("Convert Values")
-        self.tk.minsize(width=640,height=130)
+        self.tk.minsize(width=640,height=260)
         self.tk.resizable(True, False)
         self.tk.columnconfigure(2,weight=1)
         self.tk.columnconfigure(3,weight=1)
