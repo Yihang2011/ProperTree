@@ -1577,7 +1577,8 @@ class ProperTree:
     def open_plist(self, event=None):
         # Prompt the user to open a plist, attempt to load it, and if successful,
         # set its path as our current_plist value
-        path = fd.askopenfilename(title = "Select plist file") # ,parent=current_window) # Apparently parent here breaks on 10.15?
+        file_types = [('Plist Files', '*.plist')]
+        path = fd.askopenfilename(title = "Select plist file", filetypes = file_types) # ,parent=current_window) # Apparently parent here breaks on 10.15?
         if not len(path): return # User cancelled - bail
         path = os.path.abspath(os.path.expanduser(path))
         return self.pre_open_with_path(path)
