@@ -668,8 +668,8 @@ class ProperTree:
         if os.name == "nt":
             # If OS Version is 10
             windows_version = sys.getwindowsversion()
-            if (windows_version.major > 10 and windows_version.manor > 17134):
-                print(">windows 10 1803")
+            # if (windows_version.major > 10 and windows_version.manor > 17134):
+            #     print(">windows 10 1803")
                 # Get the registry entry to tell us if we're in dark/light mode
             p = subprocess.Popen(
                     ["reg", "query", "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "/v",
