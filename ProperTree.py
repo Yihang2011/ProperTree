@@ -279,23 +279,21 @@ class ProperTree:
 
         default_font = tk.Button(self.settings_window, text = "Font Defaults", command = self.font_defaults)
         default_font.grid(row = 13, column = 3, sticky = "we", padx = 10)
-        default_high = tk.Button(self.settings_window, text = "Highlight Color",
+        self.default_high = tk.Checkbutton(self.settings_window, text = "Highlight Color",
                                  command = lambda: self.swap_colors("highlight"))
-        default_high.grid(row = 14, column = 3, sticky = "we", padx = 10)
-        default_light = tk.Button(self.settings_window, text = "Light Mode Colors",
-                                  command = lambda: self.swap_colors("light"))
-        default_light.grid(row = 13, column = 4, sticky = "we", padx = 10)
-        default_dark = tk.Button(self.settings_window, text = "Dark Mode Colors",
-                                 command = lambda: self.swap_colors("dark"))
-        # mode_default = tk.IntVar()
-        # mode_default.set(2)
-        # default_light = tk.Radiobutton(self.settings_window, text = "Light Mode Colors", variable = mode_default, value = 1,
-        #                                command = lambda : self.swap_colors("light"))
-        default_light.grid(row = 13, column = 4, sticky = "we", padx = 10)
-        # default_dark = tk.Radiobutton(self.settings_window, text = "Dark Mode Colors", variable = mode_default, value = 2,
-        #                                command = lambda : self.swap_colors("dark"))
-        default_dark.grid(row = 14, column = 4, sticky = "we", padx = 10)
-        # default_dark.grid(row = 14, column = 4, sticky = "we", padx = 10)
+        self.default_high.grid(row = 14, column = 3, sticky = "we", padx = 10)
+
+        self.mode_default = tk.IntVar()
+        self.default_light = tk.Radiobutton(self.settings_window, text = "Light Mode Colors", variable = self.mode_default, value = 1,
+                                       command = lambda : self.swap_colors("light"))
+        self.default_light.grid(row = 13, column = 4, sticky = "we", padx = 10)
+        self.default_dark = tk.Radiobutton(self.settings_window, text = "Dark Mode Colors", variable = self.mode_default, value = 2,
+                                       command = lambda : self.swap_colors("dark"))
+        self.default_dark.grid(row = 14, column = 4, sticky = "we", padx = 10)
+        if self.get_dark() == True:
+            self.mode_default.set(2)
+        else:
+            self.mode_default.set(1)
 
         sep_theme = ttk.Separator(self.settings_window, orient = "horizontal")
         sep_theme.grid(row = 15, column = 0, columnspan = 5, sticky = "we", padx = 10, pady = (10, 0))
@@ -668,15 +666,14 @@ class ProperTree:
         if os.name == "nt":
             # If OS Version is 10
             windows_version = sys.getwindowsversion()
-            # if (windows_version.major > 10 and windows_version.manor > 17134):
-            #     print(">windows 10 1803")
+            if (windows_version.major >= 10 and windows_version.build > 17134):
                 # Get the registry entry to tell us if we're in dark/light mode
-            p = subprocess.Popen(
-                    ["reg", "query", "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "/v",
-                     "AppsUseLightTheme"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-            c = p.communicate()
-            return c[0].decode("utf-8", "ignore").strip().lower().split(" ")[-1] in ("", "0x0")
-            # return False
+                p = subprocess.Popen(
+                        ["reg", "query", "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "/v",
+                         "AppsUseLightTheme"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+                c = p.communicate()
+                return c[0].decode("utf-8", "ignore").strip().lower().split(" ")[-1] in ("", "0x0")
+            return False
         elif str(sys.platform) != "darwin":
             return False  # Default to light mode on Linux platforms
         # Get the macOS version - and see if dark mode is a thing
