@@ -108,7 +108,7 @@ git clone https://github.com/Yihang2011/ProperTree
 
 * **Can I use ProperTree on Linux?**
 
-  Yes. But sometimes it doesn't work on some Linux Distros, such as ArchLinux etc. It might be fix in the future.
+  Yes. But sometimes it doesn't work on some Linux Distros, such as ArchLinux etc. It might be fixed in the future.
 
 ```
  - Currently Available Python Versions -
