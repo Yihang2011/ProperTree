@@ -106,6 +106,10 @@ git clone https://github.com/Yihang2011/ProperTree
 
   An example of the output of `buildapp-select.command` is shown below.  It will walk the output of `which python` and `which python3`, then attempt to load the `tk` interface while keeping track of which work and which fail.  The example below is from macOS 11.2 (20D4029f) with the system versions of python 2 and 3, as well as python 3.9.1 installed from python.org.  If there's an existing `ProperTree.app` in the directory above the `Scripts` folder, the shebang of that app will be located and served up as the `C. Current` option.  At the following menu, I would select option `3` or `C` to use the non-system python install.
 
+* **Can I use ProperTree on Linux?**
+
+  Yes. But sometimes it doesn't work on some Linux Distros, such as ArchLinux etc. It might be fix in the future.
+
 ```
  - Currently Available Python Versions -
 
