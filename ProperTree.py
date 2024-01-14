@@ -287,7 +287,15 @@ class ProperTree:
         default_light.grid(row = 13, column = 4, sticky = "we", padx = 10)
         default_dark = tk.Button(self.settings_window, text = "Dark Mode Colors",
                                  command = lambda: self.swap_colors("dark"))
+        # mode_default = tk.IntVar()
+        # mode_default.set(2)
+        # default_light = tk.Radiobutton(self.settings_window, text = "Light Mode Colors", variable = mode_default, value = 1,
+        #                                command = lambda : self.swap_colors("light"))
+        default_light.grid(row = 13, column = 4, sticky = "we", padx = 10)
+        # default_dark = tk.Radiobutton(self.settings_window, text = "Dark Mode Colors", variable = mode_default, value = 2,
+        #                                command = lambda : self.swap_colors("dark"))
         default_dark.grid(row = 14, column = 4, sticky = "we", padx = 10)
+        # default_dark.grid(row = 14, column = 4, sticky = "we", padx = 10)
 
         sep_theme = ttk.Separator(self.settings_window, orient = "horizontal")
         sep_theme.grid(row = 15, column = 0, columnspan = 5, sticky = "we", padx = 10, pady = (10, 0))
@@ -661,20 +669,21 @@ class ProperTree:
             # If OS Version is 10
             windows_version = sys.getwindowsversion()
             if (windows_version.major > 10 and windows_version.manor > 17134):
+                print(">windows 10 1803")
                 # Get the registry entry to tell us if we're in dark/light mode
-                p = subprocess.Popen(
+            p = subprocess.Popen(
                     ["reg", "query", "HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "/v",
                      "AppsUseLightTheme"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-                c = p.communicate()
-                return c[0].decode("utf-8", "ignore").strip().lower().split(" ")[-1] in ("", "0x0")
-            return False
+            c = p.communicate()
+            return c[0].decode("utf-8", "ignore").strip().lower().split(" ")[-1] in ("", "0x0")
+            # return False
         elif str(sys.platform) != "darwin":
             return False  # Default to light mode on Linux platforms
         # Get the macOS version - and see if dark mode is a thing
         p = subprocess.Popen(["sw_vers", "-productVersion"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
         c = p.communicate()
         p_vers = c[0].decode("utf-8", "ignore").strip().lower()
-        if p_vers < "10.14.0": return True  # Default to dark on anything prior to
+        if p_vers < "10.14.0": return False  # Default to light on anything prior to
         # At this point - we have an OS that supports dark mode, let's check our value
         p = subprocess.Popen(["defaults", "read", "-g", "AppleInterfaceStyle"], stdout = subprocess.PIPE,
                              stderr = subprocess.PIPE)
