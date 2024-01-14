@@ -16,6 +16,7 @@ ProperTree is a cross-platform GUI plist editor written using Python *(compatibl
 - [x] Context-aware right-click menu that includes template info to OpenCore or Clover config.plist files
 - [x] OC (Clean) Snapshot to walk the contents of ACPI, Drivers, Kexts, and Tools for OpenCore config.plist files
 - [x] Value converter that supports Base64, Hex, Ascii, and Decimal
+- [x] Cross-platform support for auto Light/Dark Mode
 
 ***
 
