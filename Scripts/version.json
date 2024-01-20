@@ -1,4 +1,4 @@
 {
-    "version": "0.2.6.1",
-    "changes": "- Add support for HiDPI."
+    "version": "0.2.6.2",
+    "changes": "- Change the default theme on some OS."
 }
